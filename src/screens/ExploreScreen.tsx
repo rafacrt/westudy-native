@@ -19,7 +19,7 @@ import { mockListings, roomCategories } from '../data/mockData';
 import type { ExploreStackParamList, Listing } from '../types/navigation';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = (width - 48) / 2; // Para 2 colunas com padding
+const ITEM_WIDTH = width - 32; // Full width com padding
 
 interface Category {
   id: string;
@@ -72,28 +72,42 @@ export default function ExploreScreen() {
     <TouchableOpacity
       style={styles.listingCard}
       onPress={() => navigation.navigate('RoomDetail', { listing: item })}
+      activeOpacity={0.8}
     >
-      <Image source={{ uri: item.images[0]?.url }} style={styles.listingImage} />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item.images[0]?.url }} style={styles.listingImage} />
+        <TouchableOpacity style={styles.favoriteButton}>
+          <Ionicons name="heart-outline" size={20} color="#fff" />
+        </TouchableOpacity>
+      </View>
       
       <View style={styles.listingInfo}>
-        <Text style={styles.listingTitle} numberOfLines={2}>
-          {item.title}
-        </Text>
-        
-        <Text style={styles.universityText}>
-          {item.university.acronym} - {item.university.city}
-        </Text>
-        
-        <View style={styles.ratingContainer}>
-          <Ionicons name="star" size={14} color="#FFD700" />
-          <Text style={styles.ratingText}>
-            {item.rating.toFixed(1)} ({item.reviews})
+        <View style={styles.locationRatingRow}>
+          <Text style={styles.locationText} numberOfLines={1}>
+            {item.university.city}, {item.university.acronym}
           </Text>
+          <View style={styles.ratingContainer}>
+            <Ionicons name="star" size={12} color="#000" />
+            <Text style={styles.ratingText}>
+              {item.rating.toFixed(1)}
+            </Text>
+          </View>
         </View>
         
-        <Text style={styles.priceText}>
-          R$ {item.pricePerNight.toLocaleString('pt-BR')}/mês
+        <Text style={styles.distanceText}>
+          5 km do campus
         </Text>
+        
+        <Text style={styles.dateText}>
+          20 - 25 de out
+        </Text>
+        
+        <View style={styles.priceRow}>
+          <Text style={styles.priceText}>
+            R$ {item.pricePerNight.toLocaleString('pt-BR')}
+          </Text>
+          <Text style={styles.periodText}> /mês</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -119,8 +133,8 @@ export default function ExploreScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#416ed3" />
-          <Text style={styles.loadingText}>Carregando quartos...</Text>
+          <ActivityIndicator size="large" color="#FF385C" />
+          <Text style={styles.loadingText}>Carregando acomodações...</Text>
         </View>
       </SafeAreaView>
     );
@@ -128,22 +142,25 @@ export default function ExploreScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header com busca */}
+      {/* Header com busca estilo Airbnb */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>WeStudy</Text>
-        
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#666" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Buscar por cidade ou universidade"
-            value={searchText}
-            onChangeText={setSearchText}
-          />
-        </View>
+        <TouchableOpacity style={styles.searchBar}>
+          <View style={styles.searchContent}>
+            <Ionicons name="search" size={16} color="#717171" />
+            <View style={styles.searchTextContainer}>
+              <Text style={styles.searchPlaceholder}>Onde você quer morar hoje</Text>
+              <Text style={styles.searchSubtitle}>
+                Qualquer lugar • Qualquer data • Hóspedes
+              </Text>
+            </View>
+          </View>
+          <View style={styles.filterButton}>
+            <Ionicons name="options-outline" size={16} color="#717171" />
+          </View>
+        </TouchableOpacity>
       </View>
 
-      {/* Categorias */}
+      {/* Categorias horizontais */}
       <View style={styles.categoriesSection}>
         <FlatList
           data={categories}
@@ -155,17 +172,17 @@ export default function ExploreScreen() {
         />
       </View>
 
-      {/* Lista de quartos */}
+      {/* Lista de acomodações */}
       <FlatList
         data={filteredListings}
         renderItem={renderListingCard}
         keyExtractor={(item) => item.id}
-        numColumns={2}
         contentContainerStyle={styles.listingsContainer}
         showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>Nenhum quarto encontrado</Text>
+            <Text style={styles.emptyText}>Nenhuma acomodação encontrada</Text>
           </View>
         }
       />
@@ -186,110 +203,167 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#666',
+    color: '#717171',
+    fontWeight: '400',
   },
   header: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#EBEBEB',
   },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#416ed3',
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  searchContainer: {
+  searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
-    borderRadius: 25,
+    backgroundColor: '#fff',
+    borderRadius: 32,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
   },
-  searchIcon: {
-    marginRight: 8,
-  },
-  searchInput: {
+  searchContent: {
     flex: 1,
-    fontSize: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchTextContainer: {
+    marginLeft: 12,
+    flex: 1,
+  },
+  searchPlaceholder: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#222222',
+    marginBottom: 2,
+  },
+  searchSubtitle: {
+    fontSize: 12,
+    color: '#717171',
+  },
+  filterButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
   },
   categoriesSection: {
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#EBEBEB',
   },
   categoriesList: {
     paddingHorizontal: 16,
   },
   categoryChip: {
-    backgroundColor: '#f0f0f0',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    marginRight: 8,
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
+    backgroundColor: '#fff',
   },
   categoryChipSelected: {
-    backgroundColor: '#416ed3',
+    backgroundColor: '#222222',
+    borderColor: '#222222',
   },
   categoryText: {
     fontSize: 14,
-    color: '#666',
+    fontWeight: '500',
+    color: '#717171',
   },
   categoryTextSelected: {
     color: '#fff',
   },
   listingsContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
   },
   listingCard: {
     width: ITEM_WIDTH,
-    marginBottom: 20,
-    marginRight: 16,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginVertical: 12,
+  },
+  imageContainer: {
+    position: 'relative',
   },
   listingImage: {
     width: '100%',
-    height: 140,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    height: 320,
+    borderRadius: 12,
+  },
+  favoriteButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listingInfo: {
-    padding: 12,
+    paddingTop: 12,
   },
-  listingTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
+  locationRatingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 4,
   },
-  universityText: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 6,
+  locationText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#222222',
+    flex: 1,
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
   },
   ratingText: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,
+    color: '#222222',
     marginLeft: 4,
+    fontWeight: '500',
+  },
+  distanceText: {
+    fontSize: 14,
+    color: '#717171',
+    marginBottom: 4,
+  },
+  dateText: {
+    fontSize: 14,
+    color: '#717171',
+    marginBottom: 8,
+  },
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
   },
   priceText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#222222',
+  },
+  periodText: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#416ed3',
+    color: '#717171',
+    fontWeight: '400',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#EBEBEB',
+    marginVertical: 12,
   },
   emptyContainer: {
     flex: 1,
@@ -299,6 +373,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#666',
+    color: '#717171',
   },
 });
