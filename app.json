@@ -1,41 +1,4 @@
 {
-  "expo": {
-    "name": "WeStudyApp",
-    "slug": "WeStudyApp",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "93e364d4-d547-4dad-b0c5-fc1ca7e10f70"
-      }
-    },
-    "owner": "rafacrt",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/93e364d4-d547-4dad-b0c5-fc1ca7e10f70"
-    }
-  }
+  "name": "westudy-native",
+  "slug": "westudy-native"
 }
