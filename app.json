@@ -1,4 +1,8 @@
 {
   "name": "westudy-native",
-  "slug": "westudy-native"
+  "slug": "westudy-native",
+  "plugins": [
+    "expo-router",
+    "expo-font"
+  ]
 }
