@@ -1,34 +1,74 @@
-// app/_layout.tsx
-import { useEffect } from 'react';
-import { Slot } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts, Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
-import { Platform, StatusBar } from 'react-native';
+// app/(tabs)/_layout.tsx - Layout das tabs
+import React from 'react';
+import { Tabs } from 'expo-router';
+import { Colors } from '../../constants/Colors';
+import { TabBarIcon } from '../../components/ui/TabBarIcon';
 
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    InterRegular: Inter_400Regular,
-    InterSemiBold: Inter_600SemiBold,
-  });
-
-  useEffect(() => {
-    if (error) console.error(error);
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) SplashScreen.hideAsync();
-  }, [loaded]);
-
-  if (!loaded) return null;
-
+export default function TabLayout() {
   return (
-    <>
-      {Platform.OS === 'android' && (
-        <StatusBar translucent backgroundColor="transparent" />
-      )}
-      <Slot />
-    </>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors.light.tabIconSelected,
+        tabBarInactiveTintColor: Colors.light.tabIconDefault,
+        tabBarStyle: {
+          backgroundColor: Colors.light.background,
+          borderTopColor: Colors.light.borderSecondary,
+          height: 90,
+          paddingBottom: 20,
+          paddingTop: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+        },
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Início',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="home" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: 'Explorar',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="search" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="trips"
+        options={{
+          title: 'Viagens',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="heart" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="wishlists"
+        options={{
+          title: 'Favoritos',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="heart-outline" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Perfil',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="person" focused={focused} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
