@@ -11,9 +11,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { Colors } from '../../constants/Colors';
-import { ExploreSearchBar } from '../../components/ui/ExploreSearchBar';
-import { CategoryMenu } from '../../components/ui/CategoryMenu';
-import { ListingCard } from '../../components/ui/ListingCard';
+import { ExploreSearchBar } from '../../components/ExploreSearchBar';
+import { CategoryMenu } from '../../components/CategoryMenu';
+import { ListingCard } from '../../components/ListingCard';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { ErrorMessage } from '../../components/ui/ErrorMessage';
 import { useListings } from '../../hooks/useListings';

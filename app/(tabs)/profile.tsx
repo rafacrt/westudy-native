@@ -140,7 +140,7 @@ export default function ProfileScreen() {
   );
 }
 
-const profileStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.background,
@@ -231,51 +231,4 @@ const profileStyles = StyleSheet.create({
     color: Colors.light.textMuted,
     textAlign: 'center',
   },
-  // Styles para outras telas
-  cardContainer: {
-    flex: 1,
-  },
-  cardLeft: {
-    marginRight: 8,
-  },
-  cardRight: {
-    marginLeft: 8,
-  },
-  row: {
-    paddingHorizontal: 16,
-    justifyContent: 'space-between',
-  },
-  listContent: {
-    paddingBottom: 20,
-  },
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 40,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: Colors.light.text,
-    marginTop: 16,
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  emptySubtitle: {
-    fontSize: 16,
-    color: Colors.light.textSecondary,
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 24,
-  },
-  exploreButton: {
-    minWidth: 200,
-  },
 });
-
-// Export all styles
-export const styles = {
-  ...tripsStyles,
-  ...profileStyles,
-};

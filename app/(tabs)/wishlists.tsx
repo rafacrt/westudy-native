@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
-import { ListingCard } from '../../components/ui/ListingCard';
+import { ListingCard } from '../../components/ListingCard';
 import { Button } from '../../components/ui/Button';
 import type { Listing } from '../../types';
 
@@ -91,3 +91,66 @@ export default function WishlistsScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+  },
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.borderSecondary,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: Colors.light.text,
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: Colors.light.textSecondary,
+  },
+  listContent: {
+    padding: 20,
+  },
+  row: {
+    justifyContent: 'space-between',
+  },
+  cardContainer: {
+    flex: 1,
+  },
+  cardLeft: {
+    marginRight: 8,
+  },
+  cardRight: {
+    marginLeft: 8,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    paddingTop: 100,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.light.text,
+    marginTop: 16,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    fontSize: 16,
+    color: Colors.light.textSecondary,
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+  exploreButton: {
+    minWidth: 200,
+  },
+});

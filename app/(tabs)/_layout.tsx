@@ -2,7 +2,7 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { Colors } from '../../constants/Colors';
-import { TabBarIcon } from '../../components/ui/TabBarIcon';
+import { TabBarIcon } from '../../components/TabBarIcon';
 
 export default function TabLayout() {
   return (
@@ -47,7 +47,7 @@ export default function TabLayout() {
         options={{
           title: 'Viagens',
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="heart" focused={focused} />
+            <TabBarIcon name="calendar" focused={focused} />
           ),
         }}
       />
